@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Castle Sokoban</title>
+</head>
+<body>
+<canvas id="canvas" height="700" width="1500">
+</canvas>
+
+<script src="Tlacitka/tlacitka.js">
+</script>
+
+<script src="Objekty/objekty.js">
+</script>
+
+<script src="Handler/Handler.js">
+</script>
+
+<script src="Stavy/Stavy.js">
+</script>
+
+<script src="sounds/Mute.js">
+</script>
+
+<script src="Hra.js">
+</script>
+
+<script type="text/javascript">
+    const game = new Game();
+    game.start().then(() => console.log('done')).catch(err => console.error(err));
+  </script>
+  
+</body>
+</html>
