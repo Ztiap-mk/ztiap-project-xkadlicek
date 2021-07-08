@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rytier</title>
+</head>
+<body>
+<script>
+    function loadImage(srcs, callback) {
+        const promises = srcs.map(src => {
+            return new Promise(resolve => {
+                var img = document.createElement('img');
+                img.addEventListener('load', function() { resolve(); } , false);
+                img.src = src;
+            });
+        });
+
+        Promise.all(promises).then(() => callback()).catch(err => callback(err));
+    }
+
+    loadImage(['images/ht.png', 'images/bomba1.png', 'images/rytier.png','images/rr.png','images/dvere.png'], (err) => {
+        if (err) {
+            throw err;
+        }
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        var bckgrnd = new Image();
+        bckgrnd.src ="images/ht.png";
+        function background(ctx,bckgrnd)
+        {
+            ctx.drawImage(bckgrnd,0,0,1500,700);
+            ctx.font ="30px Calibri";
+            ctx.fillStyle = 'red';
+            ctx.fillText("Sokoban - Castle Edition",canvas.width/3,40);
+        }
+
+        var player = new Image();
+        player.src = "images/rytier.png";
+        function plyr(ctx,player)
+        {
+            var posX = 10;
+            var posY = canvas.height/2;
+            var dx = 2;
+            var dy = 0;
+            setInterval(function()
+            {
+                ctx.clearRect(0, 0, 1500,700);
+                background(ctx,bckgrnd);
+                bomb(ctx,bomba);
+                rr(ctx,restart);
+                dvere(ctx,door);
+                posX += dx;
+                ctx.drawImage(player,posX,posY,50,50);
+                if (posX >= canvas.width-50 || posX <= 0) {
+                    dx *= -1
+                }
+            },1)
+        }
+
+        var bomba = new Image();
+        bomba.src = "images/bomba1.png";
+        function bomb(ctx,bomba)
+        {
+            ctx.drawImage(bomba,canvas.width*2/4,canvas.height/2,50,50);
+        }
+
+        var door = new Image();
+        door.src = "images/dvere.png";
+        function dvere(ctx,door)
+        {
+            ctx.drawImage(door,canvas.width/4,canvas.height/2,50,50);
+        }
+
+        var restart = new Image();
+        restart.src = "images/rr.png";
+        function rr(ctx,restart)
+        {
+            ctx.drawImage(restart,canvas.width*3/4,canvas.height/2,50,50);
+        }
+
+        background(ctx,bckgrnd);
+        plyr(ctx,player);
+        bomb(ctx,bomba);
+        dvere(ctx,door);
+        rr(ctx,restart);
+    });
+
+</script>
+<canvas id="canvas" height="700" width="1500">
+</canvas>
+</body>
+</html>
